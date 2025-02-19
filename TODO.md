@@ -1,0 +1,3 @@
+- Configurar EsLint, Prettier
+- Configurar typeORM and migrations
+- Configurar dotenv
