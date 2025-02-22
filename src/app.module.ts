@@ -1,12 +1,17 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { controllers } from './controllers/controllers';
-import { services } from './services/services';
-import { databaseConfig } from './config/database.config';
+import { controllers } from './web/controllers/controllers';
+import { services } from './application/_shared/services';
+import { databaseConfig } from './infrastructure/config/database.config';
+import { repositoryProviders } from './infrastructure/repository/repository.providers';
+import { CqrsModule } from '@nestjs/cqrs';
+import { handlers } from './application/_shared/handlers';
+import { gateways } from './web/websocket-gateways/gateways';
 
 @Module({
   imports: [
+    CqrsModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
     }),
@@ -17,6 +22,6 @@ import { databaseConfig } from './config/database.config';
     }),
   ],
   controllers: [...controllers],
-  providers: [...services],
+  providers: [...handlers, ...repositoryProviders, ...services, ...gateways],
 })
 export class AppModule {}
