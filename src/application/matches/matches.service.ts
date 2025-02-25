@@ -12,6 +12,7 @@ import { SaveMatchModel } from '../../application/matches/save-match.model';
 import { MatchRepository } from '../../domain/interfaces/repository/match.repository';
 import { TeamRepository } from '../../domain/interfaces/repository/team.repository';
 import { CompetitionRepository } from '../../domain/interfaces/repository/competition.repository';
+import { UpdateMatchScoreModel } from './update-match-score.model';
 
 @Injectable()
 export class MatchesService {
@@ -83,6 +84,24 @@ export class MatchesService {
     const savedMatch = await this.matchRepository.create(matchEntity);
 
     return MatchModel.fromEntity(savedMatch);
+  }
+
+  async updateScore(
+    matchId: number,
+    data: UpdateMatchScoreModel,
+  ): Promise<MatchModel> {
+    const match = await this.matchRepository.getById(matchId);
+
+    if (!match) {
+      throw new NotFoundException(`Match with ID ${matchId} not found`);
+    }
+
+    match.localScore = data.localScore;
+    match.awayScore = data.awayScore;
+
+    await this.matchRepository.update(match);
+
+    return MatchModel.fromEntity(match);
   }
 
   private ValidateMatchDependencies(

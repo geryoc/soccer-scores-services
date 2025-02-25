@@ -7,7 +7,7 @@ import { databaseConfig } from './infrastructure/config/database.config';
 import { repositoryProviders } from './infrastructure/repository/repository.providers';
 import { CqrsModule } from '@nestjs/cqrs';
 import { handlers } from './application/_shared/handlers';
-import { gateways } from './web/websocket-gateways/gateways';
+import { gateways } from './web/gateways/gateways';
 
 @Module({
   imports: [

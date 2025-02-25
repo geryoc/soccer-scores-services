@@ -11,7 +11,8 @@ import {
 import { MatchModel } from '../../application/_shared/models/match.model';
 import { SaveMatchModel } from '../../application/matches/save-match.model';
 import { MatchesService } from '../../application/matches/matches.service';
-import { MatchesGateway } from '../websocket-gateways/matches.gateway';
+import { MatchesGateway } from '../gateways/matches.gateway';
+import { UpdateMatchScoreModel } from '../../application/matches/update-match-score.model';
 
 @Controller('matches')
 export class MatchesController {
@@ -41,6 +42,16 @@ export class MatchesController {
     @Body() data: SaveMatchModel,
   ): Promise<MatchModel> {
     const match = await this.matchesService.update(id, data);
+    this.matchesGateway.emitMatchUpdated(match);
+    return match;
+  }
+
+  @Put('score/:id')
+  async updateScore(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() data: UpdateMatchScoreModel,
+  ): Promise<MatchModel> {
+    const match = await this.matchesService.updateScore(id, data);
     this.matchesGateway.emitMatchUpdated(match);
     return match;
   }
