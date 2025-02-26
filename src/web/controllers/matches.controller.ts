@@ -46,7 +46,7 @@ export class MatchesController {
     return match;
   }
 
-  @Put('score/:id')
+  @Put(':id/score')
   async updateScore(
     @Param('id', ParseIntPipe) id: number,
     @Body() data: UpdateMatchScoreModel,
@@ -59,5 +59,10 @@ export class MatchesController {
   @Delete(':id')
   async delete(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return this.matchesService.delete(id);
+  }
+
+  @Get('today')
+  async getTodayMatches(): Promise<MatchModel[]> {
+    return await this.matchesService.getTodayMatches();
   }
 }

@@ -12,4 +12,8 @@ export class MatchRepositoryImplementation
   constructor(entityManager: EntityManager) {
     super(entityManager, Match);
   }
+
+  async getByDate(date: Date): Promise<Match[]> {
+    return await this.entityManager.find(Match, { where: { matchDate: date } });
+  }
 }

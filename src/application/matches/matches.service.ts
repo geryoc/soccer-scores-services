@@ -133,4 +133,9 @@ export class MatchesService {
       throw new BadRequestException('Away team is not part of the competition');
     }
   }
+
+  async getTodayMatches(): Promise<MatchModel[]> {
+    const matches = await this.matchRepository.getByDate(new Date());
+    return matches.map((match) => MatchModel.fromEntity(match));
+  }
 }
