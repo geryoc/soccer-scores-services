@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { setupTestApp, closeTestApp } from 'test/shared/test-setup';
+import { closeTestApp, setupTestApp } from '../shared/test-setup';
 
 describe('CountriesCqrsController (e2e)', () => {
   let app: INestApplication;

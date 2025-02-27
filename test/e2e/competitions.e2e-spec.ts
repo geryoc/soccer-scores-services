@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { setupTestApp } from 'test/shared/test-setup';
+import { closeTestApp, setupTestApp } from '../shared/test-setup';
 
 describe('CompetitionsController (e2e)', () => {
   let app: INestApplication;
@@ -14,7 +14,7 @@ describe('CompetitionsController (e2e)', () => {
   });
 
   afterAll(async () => {
-    await app.close();
+    await closeTestApp(app);
   });
 
   it('/competitions (POST) should create a competition', async () => {

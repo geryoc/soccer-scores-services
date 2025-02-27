@@ -2,12 +2,13 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { controllers } from './web/controllers/controllers';
-import { services } from './application/_shared/services';
+import { applicationServices } from './application/_shared/services';
 import { databaseConfig } from './infrastructure/config/database.config';
 import { repositoryProviders } from './infrastructure/repository/repository.providers';
 import { CqrsModule } from '@nestjs/cqrs';
-import { handlers } from './application/_shared/handlers';
+import { applicationRequestHandlers } from './application/_shared/handlers';
 import { gateways } from './web/gateways/gateways';
+import { JwtStrategy } from './web/auth/jwt.strategy';
 
 @Module({
   imports: [
@@ -22,6 +23,12 @@ import { gateways } from './web/gateways/gateways';
     }),
   ],
   controllers: [...controllers],
-  providers: [...handlers, ...repositoryProviders, ...services, ...gateways],
+  providers: [
+    JwtStrategy,
+    ...repositoryProviders,
+    ...applicationRequestHandlers,
+    ...applicationServices,
+    ...gateways,
+  ],
 })
 export class AppModule {}

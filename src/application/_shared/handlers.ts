@@ -4,7 +4,7 @@ import { UpdateCountryCommandHandler } from '../countries/commands/update-countr
 import { GetAllCountriesQueryHandler } from '../countries/queries/get-all-countries.query';
 import { GetCountryByIdQueryHandler } from '../countries/queries/get-country-by-id.query';
 
-export const handlers = [
+export const applicationRequestHandlers = [
   GetCountryByIdQueryHandler,
   GetAllCountriesQueryHandler,
   CreateCountryCommandHandler,
