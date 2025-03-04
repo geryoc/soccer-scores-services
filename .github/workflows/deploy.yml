@@ -3,7 +3,7 @@ name: Deploy to Railway
 on:
   push:
     branches:
-      - main # Change to your main branch
+      - main
 
 jobs:
   deploy:
@@ -17,7 +17,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18 # Adjust to your project's Node version
+          node-version: 20
           cache: 'npm'
 
       - name: Install dependencies
