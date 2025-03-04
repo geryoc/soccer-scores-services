@@ -4,6 +4,7 @@
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { closeTestApp, setupTestApp } from '../shared/test-setup';
+import { TeamsService } from '../../src/application/teams/teams.service';
 
 describe('CompetitionsController (e2e)', () => {
   let app: INestApplication;
@@ -11,6 +12,12 @@ describe('CompetitionsController (e2e)', () => {
 
   beforeAll(async () => {
     app = await setupTestApp();
+
+    const teamService = app.get(TeamsService);
+    const existingTeam = await teamService.getById(1);
+    if (!existingTeam) {
+      await teamService.create({ name: 'Test Team' });
+    }
   });
 
   afterAll(async () => {
