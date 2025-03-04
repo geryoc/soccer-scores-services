@@ -13,8 +13,10 @@ describe('CompetitionsController (e2e)', () => {
   beforeAll(async () => {
     app = await setupTestApp();
 
+    // Precondition: team with id 1 exists
     const teamService = app.get(TeamsService);
-    const existingTeam = await teamService.getById(1);
+    const teams = await teamService.getAll();
+    const existingTeam = teams.find((team) => team.id === 1);
     if (!existingTeam) {
       await teamService.create({ name: 'Test Team' });
     }

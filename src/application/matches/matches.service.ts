@@ -32,6 +32,9 @@ export class MatchesService {
 
   async getById(id: number): Promise<MatchModel> {
     const match = await this.matchRepository.getById(id);
+    if (!match) {
+      throw new NotFoundException(`Match with ID ${id} not found`);
+    }
     return MatchModel.fromEntity(match);
   }
 
