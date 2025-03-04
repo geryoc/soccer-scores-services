@@ -18,9 +18,6 @@ export class TeamsService {
 
   async getById(id: number): Promise<TeamModel> {
     const team = await this.teamRepository.getById(id);
-    if (!team) {
-      throw new NotFoundException(`Team with ID ${id} not found`);
-    }
     return team;
   }
 

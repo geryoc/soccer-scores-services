@@ -23,11 +23,6 @@ export class CompetitionsService {
 
   async getById(id: number): Promise<CompetitionModel> {
     const competition = await this.competitionRepository.getById(id);
-
-    if (!competition) {
-      throw new NotFoundException(`Competition with ID ${id} not found`);
-    }
-
     return CompetitionModel.fromEntity(competition);
   }
 

@@ -25,9 +25,6 @@ export class GetCountryByIdQueryHandler
 
   async execute(query: GetCountryByIdQuery) {
     const country = await this.repository.getById(query.id);
-    if (!country) {
-      throw new NotFoundException(`Country with ID ${query.id} not found`);
-    }
     return CountryModel.fromEntity(country);
   }
 }

@@ -18,9 +18,6 @@ export class CountriesService {
 
   async getById(id: number): Promise<CountryModel> {
     const country = await this.countryRepository.getById(id);
-    if (!country) {
-      throw new NotFoundException(`Country with ID ${id} not found`);
-    }
     return CountryModel.fromEntity(country);
   }
 
