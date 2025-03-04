@@ -1,0 +1,55 @@
+name: Run Tests
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    name: Run Jest Tests
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: SoccerScoresLocal
+        ports:
+          - 5432:5432
+        options: --health-cmd="pg_isready -U postgres" --health-timeout=30s --health-start-period=5s --health-retries=5
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.12.0
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Set environment variables
+        run: |
+          echo "DB_HOST=localhost" >> .env
+          echo "DB_PORT=5432" >> .env
+          echo "DB_USERNAME=postgres" >> .env
+          echo "DB_PASSWORD=postgres" >> .env
+          echo "DB_DATABASE=SoccerScoresLocal" >> .env
+          echo "DB_MIGRATIONSRUN=true" >> .env
+          echo "AUTH0_ISSUER_URL=https://dev-iag6tlgh708llsbd.us.auth0.com" >> .env
+          echo "AUTH0_AUDIENCE=soccer-live-scores-services" >> .env
+
+      - name: Run Jest tests
+        run: npm run test:e2e
+        env:
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_USERNAME: postgres
+          DB_PASSWORD: postgres
+          DB_DATABASE: SoccerScoresLocal
