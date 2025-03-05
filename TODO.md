@@ -6,10 +6,10 @@ Web Sockets [done]
 Agregar update score endpoint [done]
 e2e tests - agregar todos los controllers y analizar herramienta UI para los tests [done]
 Auth and passport usando Auth0 [done]
+Automate tests using Github Actions [done]
+Deploy using GitHub Actions [done]
 
---
-Automate tests using Github Actions (BDD para tests ? Test Container ??) - Ejecutar tests en el pipeline
-Deploy using GitHub Actions (IN PROGRESS)
+---
 
 OPEN API Swagger
 Crear Cliente en Angular besoccer clone y Deploy
