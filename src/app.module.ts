@@ -9,6 +9,8 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { applicationRequestHandlers } from './application/_shared/handlers';
 import { gateways } from './web/gateways/gateways';
 import { JwtStrategy } from './web/auth/jwt.strategy';
+import { CacheModule } from '@nestjs/cache-manager';
+import { cacheConfig } from './infrastructure/config/cache.config';
 
 @Module({
   imports: [
@@ -20,6 +22,11 @@ import { JwtStrategy } from './web/auth/jwt.strategy';
       imports: [ConfigModule],
       useFactory: databaseConfig,
       inject: [ConfigService],
+    }),
+    CacheModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: cacheConfig,
     }),
   ],
   controllers: [...controllers],

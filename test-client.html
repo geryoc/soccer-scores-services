@@ -73,11 +73,11 @@
     <div id="matches"></div>
 
     <script>
-      const socket = io('http://localhost:3000');
+      const socket = io('http://localhost:3300');
 
       async function fetchInitialMatches() {
         try {
-          const response = await fetch('http://localhost:3000/matches');
+          const response = await fetch('http://localhost:3300/matches');
           if (!response.ok) {
             throw new Error('Network response was not ok');
           }
